@@ -114,4 +114,87 @@ public class DestinationController {
   }
 
 }
+
+@PostMapping
+public ResponseEntity<Map<String, Object>> createDestination(@RequestBody DestinationDTO dto) {
+    Map<String, Object> response = new HashMap<>();
+    try {
+        DestinationDTO created = destinationService.createDestination(dto);
+
+        response.put("ok", true);
+        response.put("status", HttpStatus.CREATED.value());
+        response.put("message", "Destination created successfully");
+        response.put("data", created);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+
+    } catch (Exception ex) {
+        response.put("ok", false);
+        response.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        response.put("message", ex.getMessage());
+        response.put("error", "Internal Server Error");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+}
+
+@PutMapping("/{id}")
+public ResponseEntity<Map<String, Object>> updateDestination(
+        @PathVariable Long id,
+        @RequestBody DestinationDTO dto
+) {
+    Map<String, Object> response = new HashMap<>();
+    try {
+        DestinationDTO updated = destinationService.updateDestination(id, dto);
+
+        response.put("ok", true);
+        response.put("status", HttpStatus.OK.value());
+        response.put("message", "Destination updated successfully");
+        response.put("data", updated);
+
+        return ResponseEntity.ok(response);
+
+    } catch (RuntimeException ex) {
+        response.put("ok", false);
+        response.put("status", HttpStatus.NOT_FOUND.value());
+        response.put("message", ex.getMessage());
+        response.put("error", "Destination not found");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+
+    } catch (Exception ex) {
+        response.put("ok", false);
+        response.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        response.put("message", ex.getMessage());
+        response.put("error", "Internal Server Error");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+}
+
+@DeleteMapping("/{id}")
+public ResponseEntity<Map<String, Object>> deleteDestination(@PathVariable Long id) {
+    Map<String, Object> response = new HashMap<>();
+    try {
+        destinationService.deleteDestination(id);
+
+        response.put("ok", true);
+        response.put("status", HttpStatus.OK.value());
+        response.put("message", "Destination deleted successfully");
+
+        return ResponseEntity.ok(response);
+
+    } catch (RuntimeException ex) {
+        response.put("ok", false);
+        response.put("status", HttpStatus.NOT_FOUND.value());
+        response.put("message", ex.getMessage());
+        response.put("error", "Destination not found");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+
+    } catch (Exception ex) {
+        response.put("ok", false);
+        response.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        response.put("message", ex.getMessage());
+        response.put("error", "Internal Server Error");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+}
+
 }

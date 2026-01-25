@@ -25,5 +25,5 @@ public interface HotelReservationRepository extends JpaRepository<HotelReservati
 
     List<HotelReservation> findByUser_IdOrderByCreatedAtDesc(Long userId);
 
+    List<HotelReservation> findAllByOrderByCreatedAtDesc();
 }
-

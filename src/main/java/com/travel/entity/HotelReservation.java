@@ -160,6 +160,40 @@ public class HotelReservation {
     public void setRoomIds(String roomIds) {
         this.roomIds = roomIds;
     }
+
+    @Column(columnDefinition = "TEXT")
+    private String roomAdults;
+
+    public String getRoomAdults() {
+        return roomAdults;
+    }
+
+    public void setRoomAdults(String roomAdults) {
+        this.roomAdults = roomAdults;
+    }
+
+    public String getRoomChildren() {
+        return roomChildren;
+    }
+
+    public void setRoomChildren(String roomChildren) {
+        this.roomChildren = roomChildren;
+    }
+
+    public String getRoomBabies() {
+        return roomBabies;
+    }
+
+    public void setRoomBabies(String roomBabies) {
+        this.roomBabies = roomBabies;
+    }
+
+    @Column(columnDefinition = "TEXT")
+    private String roomChildren;
+
+    @Column(columnDefinition = "TEXT")
+    private String roomBabies;
+
 }
 
 

@@ -35,13 +35,25 @@ public class SecurityConfig {
             )
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                // auth
                 .requestMatchers("/api/auth/signup", "/api/auth/login").permitAll()
                 .requestMatchers("/api/auth/change-password").authenticated()
                 .requestMatchers("/api/auth/me").authenticated()
+
+                // public browse
                 .requestMatchers("/api/hotels/**").permitAll()
                 .requestMatchers("/api/destinations/**").permitAll()
                 .requestMatchers("/api/packs/**").permitAll()
-                
+
+                // ✅ reservations (must be logged in)
+                .requestMatchers(HttpMethod.POST, "/api/reservations").authenticated()
+                .requestMatchers(HttpMethod.GET, "/api/reservations/me").authenticated()
+                .requestMatchers(HttpMethod.GET, "/api/reservations/*/invoice").authenticated()
+                .requestMatchers(HttpMethod.GET, "/api/reservations/*/invoice.pdf").authenticated()
+
+                // ✅ admin reservations endpoints
+                .requestMatchers("/api/admin/reservations/**").permitAll()
 
                 .anyRequest().authenticated()
             )
